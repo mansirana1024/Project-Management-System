@@ -1,0 +1,52 @@
+{% extends "core/logged_base.html" %} 
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+{% if user.is_student %}
+<div class="breadcrumbs">
+        <a href="{% url "home" %}">SPMS</a>
+        &rsaquo;
+        Student
+        &rsaquo;
+        <a style="color: white" href="{% url  "student_update_profile" %}">Update Profile</a>
+        <span class="float-right">Welcome {{ user.student.first_name }}</span>    
+</div>
+<div class="wrapper">
+    <div class="w-50">
+    <form action="{% url "student_view_profile" %}" method="POST">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+        <button class="btn btn-outline-info float-right mb-5">Update</button>       
+        <div class="clearfix"></div>       
+    </form>
+    </div>
+
+</div>
+
+{% else %}
+<div class="breadcrumbs">
+        <a href="{% url "home" %}">SPMS</a>
+        &rsaquo;
+        Supervisor
+        &rsaquo;
+        <a style="color: white" href="{% url  "supervisor_view_profile" %}">Update Profile</a>
+        <span class="float-right">Logged in as Supervisor</span>    
+</div>
+<div class="wrapper"> 
+    <div class="w-50">
+    <form action="{% url "supervisor_update_profile" %}" method="POST">
+        {% csrf_token %}
+
+        {{ form | crispy }}
+        <button class="btn btn-outline-info mb-5 float-right">Update</button>
+        <div class="clearfix"></div>       
+    </form>
+    </div>
+
+</div>
+{% endif %}
+{% endif %}
+{% endblock %}

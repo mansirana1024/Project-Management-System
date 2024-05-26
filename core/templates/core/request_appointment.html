@@ -1,0 +1,77 @@
+{% extends "core/logged_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+  {% if user.is_student %}
+  <div class="breadcrumbs">
+    <a href="{% url "home" %}">SPMS</a>
+    &rsaquo;
+    Student
+    &rsaquo;
+    Appointments
+    &rsaquo;
+    <a href="{% url  "appointments" %}">Pending Appointments</a>
+    &frasl;
+    <a href="{% url  "request_appointment" %}">Request Appoinmtent</a>
+    <span class="float-right">Welcome {{ user.student.first_name }}</span>    
+</div>  
+  <div class="wrapper">
+  <table class="table w-100">
+    <h5 class="mt-3">Available Days and Time Slots for supervision by {{ user.student.supervisor.first_name }} {{ user.student.supervisor.last_name }}</h5>
+    <th>Day</th>
+    <th>Time slot</th>
+    {% for day in available_days %}
+    <tr>
+      <td>Monday </td>
+      <td>{{ day.monday }}</td>
+    </tr>
+
+    <tr>
+      <td>Tuesday</td>
+      <td>{{ day.tuesday }}</td>
+    </tr>
+
+    <tr>
+      <td>Wednesday</td>
+      <td>{{ day.wednesday }}</td>
+    </tr>
+
+    <tr>
+      <td>Thursday</td>
+      <td>{{ day.thursday }}</td>
+    </tr>
+
+    <tr>
+      <td>Friday</td>
+      <td>{{ day.friday }}</td>
+    </tr>
+
+    <tr>
+      <td>Saturday</td>
+      <td>{{ day.saturday }}</td>
+    </tr>
+
+    <tr>
+      <td>Sunday</td>
+      <td>{{ day.sunday }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <div id="request-appointment" class="w-100 mt-5 mb-5">
+    <form action="{% url "request_appointment" %}" method="POST">
+      {% csrf_token %}
+      <div class="w-75 text-left">
+        <h5 class="mb-3">Request Appointment</h5>        
+        {{ form | crispy }}
+      <button class="btn btn-success text-left pl-4 pr-4" type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+  {% endif %}
+  <!-- <input type="submit" value="Sign Up"> -->
+</div>
+
+{% endblock %}

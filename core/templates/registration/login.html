@@ -1,0 +1,20 @@
+  {% extends "core/logged_base.html" %}
+  {% load crispy_forms_tags %}        
+  {% block content %}
+  
+ 
+  <div class="wrapper">
+    <div class="w-50 text-left">
+      <h4 class="mb-3"> <b>Login</b></h4>
+      <form class="form-horizontal" name="LoginForm" action="{% url "login" %}" method="post"> 
+        {% csrf_token %}
+        {{ form | crispy }}
+        <div class="w-100  m-auto text-right">
+          <button class="btn btn-outline-success pl-4 pr-4 mb-5" type="submit">Log In</button>
+        </div>
+      </form>    
+    </div>
+  </div>
+  
+  {% endblock %}
+  

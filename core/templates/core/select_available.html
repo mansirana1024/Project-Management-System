@@ -1,0 +1,99 @@
+{% extends "core/logged_base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+{% if user.is_supervisor %}
+<div class="breadcrumbs">
+    <a href="{% url "home" %}">SPMS</a>
+    &rsaquo;
+    Supervisor
+    &rsaquo;
+    <a href="{% url  "appointments" %}">Appointments</a>
+    &boxv;
+    <a href="{% url  "select_days" %}">Select Available Days</a>
+    <span class="float-right">Logged in as Supervisor</span>    
+</div> 
+<div class="wrapper">
+<h6 class="w-75 m-auto pb-4">Select available time slots</h6>
+<form action="{% url "save_days" %}" method="POST">
+    {% csrf_token %}
+    <div class="w-100">
+            <table class="table table-hover table-bordered table-striped ">
+                <thead class="thead-dark">
+                    <th class="pl-2">Day</th>
+                    <th class="pl-2">Update/Add Time Slot</th>
+                    <th class="text-right pr-2">Delete Time Slot</th>
+            </thead>
+            {% for field in form2 %}
+            <tr> 
+            <td class="mb-4">
+                <div class= "pl-2">
+                    {{ field.label }}
+                </div>
+            </td>
+            <td>
+            <div class="input-group date time1" id="datetimepicker1" data-target-input="nearest">
+                <div class="mr-3 float-right">
+                    <div class="input-group-append time2" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                    {{ field }}
+                    <span class="input-group-text"><i class="fa fa-clock-o"></i></span>
+                    </div>
+                </div>
+                </td>
+                <td>
+                <span class="input-group-text tip">
+                    <i class="fa fa-close"></i>
+                    <span class="tiptext">
+                        Delete the saved timeslot
+                    </span>
+                </span>
+                <div class="clearfix"></div>
+                </td>
+            </div>
+            </tr>
+            {% endfor %}
+            <table>
+            <script>
+    
+            $(function () {
+              var count = 0;
+              var id_count = 1;
+    
+              //Django template loop to dynamically update timePicker
+              {% for field in form2 %}
+    
+                var id = "datetimepicker"+id_count;
+                var dataTarget = "#datetimepicker"+id_count;
+                console.log(id, dataTarget);    
+                document.getElementsByClassName("time1")[count].setAttribute("id",id);
+                document.getElementsByClassName("time2")[count].setAttribute("data-target",dataTarget);
+                $(dataTarget).datetimepicker({
+                format: 'HH:mm',
+              });
+              count += 1;
+              id_count += 1;
+              {% endfor %}
+    
+            });
+    
+            </script>
+    <!-- <input type="submit" value="Sign Up"> -->
+    <button class="btn btn-outline-success mt-3 pl-4 pr-4 float-right" type="submit">Submit</button>
+    <div class="clearfix"></div> 
+    </div>
+</form>
+
+{% endif %}
+{% endif %}
+</div>
+{% endblock %}
+
+{% for completed_milestone in completed_milestones %}
+{% if milestone.id == completed_milestone.milestone.id %}
+<div class = "row milestone mt-1 bg-success">
+{% else %}
+<div class = "row milestone mt-1 bg-danger">
+{% endif %}
+{% endfor %}

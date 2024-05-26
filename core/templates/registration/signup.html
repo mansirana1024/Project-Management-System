@@ -1,0 +1,16 @@
+{% extends "core/logged_base.html" %}
+{% block content %}
+<div class="wrapper">
+  <h3 class="mb-4"> <b> SPMS Registration</b></h3>
+  <p>Select the type of account you want to create below:</p>
+  <a class="text-white" href="{% url "student_signup" %}">
+    <button class="btn btn-primary mr-2 pl-3 pr-3 mb-4">Student</button>
+  </a>
+  
+  <a class="text-white" href="{% url "supervisor_signup" %}">
+    <button class="btn btn-success mb-4"> Supervisor</button>
+  </a>
+  </div>  
+</div>
+
+{% endblock %}

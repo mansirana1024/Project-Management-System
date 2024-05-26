@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  <!-- Font Awesome -->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+  <!-- Moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.23.0/moment.min.js" integrity="sha256-VBLiveTKyUZMEzJd6z2mhfxIqz3ZATCuVMawPZGzIfA=" crossorigin="anonymous"></script>
+
+
+  <link rel="stylesheet" href="http://localhost:80/www.w3schools.com/maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="http://localhost:80/www.w3schools.com/cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="http://localhost:80/www.w3schools.com/ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="http://localhost:80/www.w3schools.com/cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script src="http://localhost:80/www.w3schools.com/maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>  
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+  <link rel="stylesheet" href="{% static "/core/css/main.css" %}">
+</head>
+<body>
+	<div class="content">
+                    {% if user.is_authenticated %}
+                    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+                        <a class="navbar-brand" href="{% url "home" %}"><h5><b>
+                            Student Project Management System
+                        </b></h5>
+                      </a>
+                      <div class="header-content header-content-first">
+                          <div class="header-column icon">
+                            <i class="icon-time"></i>
+                          </div>
+                          <div class="header-column">
+                            <span id="date" class="date"></span><br>
+                            <span class="time" id="clock">13:57</span>
+                          </div>
+                      </div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                          <span class="navbar-toggler-icon"></span>
+                        </button>
+                      
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                          <ul class="navbar-nav mr-auto">
+                          </ul>
+            
+                          <ul class="navbar-nav ml-auto">
+                            <li class="nav-item ">
+                              <a class="nav-link" href="{% url "home" %}">Past Projects</a>
+                            </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{% url "project" %}">Project
+                            </a>
+                            </li> 
+                            {% if user.is_student %}
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{% url "student_view_profile" %}">Profile</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item ">
+                              <a class="nav-link" href="{% url "supervisor_view_profile" %}">Profile</a>
+                          </li>                            
+                            {% endif %}
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{% url "appointments" %}">Appointments</a>
+                            </li>                            
+                            <li class="nav-item ">
+                                <a class="nav-link" href="{% url "home" %}">Notifications</a>
+                            </li>
+                            <li class="nav-item" id="signup">
+                              <a class="nav-link" href="{% url "logout" %}">Logout
+                              </a>                           
+                            </li>                          
+                          </ul>
+                        </div>
+                      </nav>                             
+                      <div class="clearfix"></div>
+                    {% else %}
+                    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+                            <a class="navbar-brand" href="{% url "home" %}"><h5>
+                             <b>Student Project Management System</b></h5></a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                              <span class="navbar-toggler-icon"></span>
+                            </button>
+                          
+                            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                              <ul class="navbar-nav mr-auto">
+                              </ul>
+                              <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{% url "home" %}">Past Projects
+                                </a>
+                                </li>                                  
+                                <li class="nav-item">
+                                    <a href="{% url "login" %}" class="nav-link">Log in</a>
+                                </li>
+                                <li class="nav-item" id="signup">
+                                  <a class="nav-link" href="{% url "select_signup" %}">Register
+                                  </a>                           
+                                </li>                          
+                              </ul>
+                            </div>
+                          </nav>
+                          <div class="clearfix"></div>
+                    {% endif %}	                    
+		<div class="main">
+        <!-- <ul class="side-nav">
+            <li class="side-nav-item"><a class="active" href="#home">Home</a></li>
+            <li  class="side-nav-item"><a href="#news">News</a></li>
+            <li  class="side-nav-item"><a href="#contact">Contact</a></li>
+            <li  class="side-nav-item"><a href="#about">About</a></li>
+        </ul>       -->
+      {% block content %}
+      
+			{% endblock %}	
+    </div>
+  </div>
+  <script>
+    var date = new Date()
+    document.getElementById("date").innerHTML = date.toUTCString()
+  </script>		
+</body>
+</html>
